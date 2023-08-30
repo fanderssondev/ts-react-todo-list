@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import '../dist/css/main.css';
 import { v4 as uuid } from 'uuid';
+import Modal from './components/Modal';
 
-type Todo = {
+type TTodo = {
   id: string;
   title: string;
   info: string;
@@ -10,9 +11,10 @@ type Todo = {
 };
 
 const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [todos, setTodos] = useState<Todo[]>([
+  const [todos, setTodos] = useState<TTodo[]>([
     {
       id: uuid(),
       title: 'Clean the plates',
@@ -81,33 +83,16 @@ const App = () => {
 
   return (
     <>
+      <Modal onOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <h1>This is the Modal</h1>
+      </Modal>
+
       <div className='container'>
         <h1 className='header'>Todo List</h1>
-        <form className='form' onSubmit={handleCreateNew}>
-          <div>
-            <label htmlFor='title'>Title</label>
-            <input
-              className='form-field'
-              type='text'
-              id='title'
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor='info'>Info</label>
-            <textarea
-              className='form-field'
-              id='info'
-              value={info}
-              onChange={e => setInfo(e.target.value)}
-            ></textarea>
-          </div>
-          <button className='form-button' type='submit'>
-            Create Todo
-          </button>
-        </form>
 
+        <button className='open-modal' onClick={() => setIsModalOpen(true)}>
+          Create Todo
+        </button>
         <div className='todo-list'>
           {todos.map(todo => {
             return (
