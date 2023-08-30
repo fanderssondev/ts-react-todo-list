@@ -1,2 +1,6 @@
-$bg-clr: #444;
-$fg-clr: #eee;
+$primary-clr: #eee;
+$secondary-clr: #444;
+
+@mixin borderRadius {
+  border-radius: 5px;
+}

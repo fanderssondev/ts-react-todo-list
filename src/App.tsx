@@ -2,8 +2,9 @@ import { useState } from 'react';
 import '../dist/css/main.css';
 import { v4 as uuid } from 'uuid';
 import Modal from './components/Modal';
+import Todo from './components/Todo';
 
-type TTodo = {
+export type TTodo = {
   id: string;
   title: string;
   info: string;
@@ -79,13 +80,19 @@ const App = () => {
 
     setTitle('');
     setInfo('');
+    setIsModalOpen(false);
   };
 
   return (
     <>
-      <Modal onOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h1>This is the Modal</h1>
-      </Modal>
+      <Modal
+        onOpen={isModalOpen}
+        title={title}
+        info={info}
+        onCreateNew={handleCreateNew}
+        onSetTitle={setTitle}
+        onSetInfo={setInfo}
+      />
 
       <div className='container'>
         <h1 className='header'>Todo List</h1>
@@ -96,30 +103,12 @@ const App = () => {
         <div className='todo-list'>
           {todos.map(todo => {
             return (
-              <div
-                key={todo.id}
-                className={`card ${todo.completed ? 'completed' : ''}`}
-                onClick={() => handleCompleted(todo.id)}
-              >
-                <div className='card-text'>
-                  <h2 className='card-text-title'>{todo.title}</h2>
-                  <p className='card-text-info'>{todo.info}</p>
-                </div>
-                <div className='card-buttons'>
-                  <button
-                    className='card-buttons-delete'
-                    onClick={() => handleDelete(todo.id)}
-                  >
-                    &#x2716;
-                  </button>
-                  <button
-                    className='card-buttons-edit'
-                    onClick={() => handleUpdate(todo.id)}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
+              <Todo
+                todo={todo}
+                onComplete={handleCompleted}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+              />
             );
           })}
         </div>
