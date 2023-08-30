@@ -4,7 +4,9 @@ interface ModalProps {
   onOpen: boolean;
   title: string;
   info: string;
-  onCreateNew: (e: React.FormEvent) => void;
+  todoId?: string;
+  onSubmit?: (e: React.FormEvent) => void;
+  onUpdate?: (e: React.FormEvent) => void;
   onSetTitle: (e: string) => void;
   onSetInfo: (e: string) => void;
 }
@@ -13,7 +15,9 @@ const Modal = ({
   onOpen,
   title,
   info,
-  onCreateNew,
+  todoId,
+  onSubmit,
+  onUpdate,
   onSetTitle,
   onSetInfo,
 }: ModalProps) => {
@@ -23,7 +27,7 @@ const Modal = ({
     <>
       <div className='modal-overlay' />
       <div className='modal'>
-        <form className='form' onSubmit={onCreateNew}>
+        <form className='form' onSubmit={todoId ? onUpdate : onSubmit}>
           <div>
             <label className='form-label' htmlFor='title'>
               Title
@@ -50,7 +54,7 @@ const Modal = ({
             />
           </div>
           <button className='form-button' type='submit'>
-            Create Todo
+            {todoId ? 'Update Todo' : 'Create Todo'}
           </button>
         </form>
       </div>

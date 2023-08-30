@@ -13,6 +13,7 @@ export type TTodo = {
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [todoId, setTodoId] = useState('');
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
   const [todos, setTodos] = useState<TTodo[]>([
@@ -48,17 +49,27 @@ const App = () => {
     );
   };
 
-  const handleUpdate = (id: string) => {
-    // TODO: Implement
-    // setTodos(previousTodos =>
-    //   previousTodos.map(todo => {
-    //     if (todo.id === id) {
-    //       return { ...todo, completed: !todo.completed };
-    //     } else {
-    //       return todo;
-    //     }
-    //   })
-    // );
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const todo = todos.find(todo => todo.id === todoId);
+
+    setTodos(previousTodos =>
+      previousTodos.map(todo => {
+        if (todo.id === todoId) {
+          return { ...todo, title, info };
+        } else {
+          return todo;
+        }
+      })
+    );
+
+    console.log('handleUpdate');
+
+    setTitle('');
+    setInfo('');
+    setTodoId('');
+    setIsModalOpen(false);
   };
 
   const handleDelete = (id: string) => {
@@ -78,21 +89,45 @@ const App = () => {
       },
     ]);
 
+    console.log('hadleCreateNew');
+
     setTitle('');
     setInfo('');
     setIsModalOpen(false);
   };
 
+  const handleEditTodo = (id: string) => {
+    const todo = todos.find(todo => todo.id === id);
+    if (!todo) return;
+
+    setTitle(todo?.title ?? '');
+    setInfo(todo?.info ?? '');
+    setTodoId(id);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
-      <Modal
-        onOpen={isModalOpen}
-        title={title}
-        info={info}
-        onCreateNew={handleCreateNew}
-        onSetTitle={setTitle}
-        onSetInfo={setInfo}
-      />
+      {todoId ? (
+        <Modal
+          onOpen={isModalOpen}
+          title={title}
+          info={info}
+          todoId={todoId}
+          onUpdate={handleUpdate}
+          onSetTitle={setTitle}
+          onSetInfo={setInfo}
+        />
+      ) : (
+        <Modal
+          onOpen={isModalOpen}
+          title={title}
+          info={info}
+          onSubmit={handleCreateNew}
+          onSetTitle={setTitle}
+          onSetInfo={setInfo}
+        />
+      )}
 
       <div className='container'>
         <h1 className='header'>Todo List</h1>
@@ -104,9 +139,10 @@ const App = () => {
           {todos.map(todo => {
             return (
               <Todo
+                key={todo.id}
                 todo={todo}
                 onComplete={handleCompleted}
-                onUpdate={handleUpdate}
+                onEdit={handleEditTodo}
                 onDelete={handleDelete}
               />
             );

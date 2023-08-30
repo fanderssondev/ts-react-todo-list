@@ -3,15 +3,14 @@ import { TTodo } from '../App';
 interface TodoProps {
   todo: TTodo;
   onComplete: (id: string) => void;
-  onUpdate: (id: string) => void;
+  onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-const Todo = ({ todo, onComplete, onUpdate, onDelete }: TodoProps) => {
+const Todo = ({ todo, onComplete, onEdit, onDelete }: TodoProps) => {
   return (
     <>
       <div
-        key={todo.id}
         className={`card ${todo.completed ? 'completed' : ''}`}
         onClick={() => onComplete(todo.id)}
       >
@@ -26,10 +25,7 @@ const Todo = ({ todo, onComplete, onUpdate, onDelete }: TodoProps) => {
           >
             &#x2716;
           </button>
-          <button
-            className='card-buttons-edit'
-            onClick={() => onUpdate(todo.id)}
-          >
+          <button className='card-buttons-edit' onClick={() => onEdit(todo.id)}>
             Edit
           </button>
         </div>
