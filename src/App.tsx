@@ -52,8 +52,6 @@ const App = () => {
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const todo = todos.find(todo => todo.id === todoId);
-
     setTodos(previousTodos =>
       previousTodos.map(todo => {
         if (todo.id === todoId) {
