@@ -108,19 +108,21 @@ const App = () => {
     <>
       {todoId ? (
         <Modal
-          onOpen={isModalOpen}
+          isOpen={isModalOpen}
           title={title}
           info={info}
           todoId={todoId}
+          onSetIsOpen={setIsModalOpen}
           onUpdate={handleUpdate}
           onSetTitle={setTitle}
           onSetInfo={setInfo}
         />
       ) : (
         <Modal
-          onOpen={isModalOpen}
+          isOpen={isModalOpen}
           title={title}
           info={info}
+          onSetIsOpen={setIsModalOpen}
           onSubmit={handleCreateNew}
           onSetTitle={setTitle}
           onSetInfo={setInfo}
@@ -130,7 +132,7 @@ const App = () => {
       <div className='container'>
         <h1 className='header'>Todo List</h1>
 
-        <button className='open-modal' onClick={() => setIsModalOpen(true)}>
+        <button className='btn-create' onClick={() => setIsModalOpen(true)}>
           Create Todo
         </button>
         <div className='todo-list'>

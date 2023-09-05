@@ -1,0 +1,46 @@
+.card {
+  border: 2px solid $clr-primary;
+  @include borderRadius;
+  width: 500px;
+  min-height: 150px;
+  box-shadow: 0 0 6px 4px rgba($clr-primary, 0.2);
+  transition: 0.2s;
+  display: flex;
+  gap: 20px;
+
+  &:hover {
+    box-shadow: 1px 1px 8px 5px rgba($clr-primary, 0.2);
+    // transform: translate(-1px, -1px);
+  }
+
+  &-text {
+    padding-left: 14px;
+    flex: 1;
+
+    &-title {
+      margin-block: 10px;
+      font-size: 2rem;
+    }
+
+    &-info {
+      line-height: 1.5;
+      padding-bottom: 10px;
+    }
+  }
+
+  &-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3px;
+
+    &-delete {
+      @include btn-close;
+      align-self: flex-end;
+    }
+
+    &-edit {
+      @include btn-text;
+    }
+  }
+}

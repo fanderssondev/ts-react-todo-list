@@ -10,6 +10,7 @@ interface TodoProps {
 const Todo = ({ todo, onComplete, onEdit, onDelete }: TodoProps) => {
   return (
     <>
+      {/* BUG: Clicking a button toggles the Complete state */}
       <div
         className={`card ${todo.completed ? 'completed' : ''}`}
         onClick={() => onComplete(todo.id)}
@@ -18,14 +19,11 @@ const Todo = ({ todo, onComplete, onEdit, onDelete }: TodoProps) => {
           <h2 className='card-text-title'>{todo.title}</h2>
           <p className='card-text-info'>{todo.info}</p>
         </div>
-        <div className='card-buttons'>
-          <button
-            className='card-buttons-delete'
-            onClick={() => onDelete(todo.id)}
-          >
+        <div className='card-btn'>
+          <button className='card-btn-delete' onClick={() => onDelete(todo.id)}>
             &#x2716;
           </button>
-          <button className='card-buttons-edit' onClick={() => onEdit(todo.id)}>
+          <button className='card-btn-edit' onClick={() => onEdit(todo.id)}>
             Edit
           </button>
         </div>

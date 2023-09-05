@@ -1,10 +1,11 @@
 import '../../dist/css/main.css';
 
 interface ModalProps {
-  onOpen: boolean;
+  isOpen: boolean;
   title: string;
   info: string;
   todoId?: string;
+  onSetIsOpen: (isOpen: boolean) => void;
   onSubmit?: (e: React.FormEvent) => void;
   onUpdate?: (e: React.FormEvent) => void;
   onSetTitle: (e: string) => void;
@@ -12,10 +13,11 @@ interface ModalProps {
 }
 
 const Modal = ({
-  onOpen,
+  isOpen: onOpen,
   title,
   info,
   todoId,
+  onSetIsOpen,
   onSubmit,
   onUpdate,
   onSetTitle,
@@ -27,6 +29,9 @@ const Modal = ({
     <>
       <div className='modal-overlay' />
       <div className='modal'>
+        <button className='button-close' onClick={() => onSetIsOpen(false)}>
+          &#x2716;
+        </button>
         <form className='form' onSubmit={todoId ? onUpdate : onSubmit}>
           <div>
             <label className='form-label' htmlFor='title'>

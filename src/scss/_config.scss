@@ -1,6 +1,27 @@
-$primary-clr: #eee;
-$secondary-clr: #444;
+$clr-primary: #eee;
+$clr-secondary: #444;
+$btn-clr-primary: #dfdfdf;
 
 @mixin borderRadius {
   border-radius: 5px;
+}
+
+@mixin btn-text {
+  @include borderRadius;
+  font-size: 20px;
+  padding: 6px 10px;
+  background-color: $btn-clr-primary;
+
+  &:hover,
+  &:focus {
+    background-color: darken($btn-clr-primary, 10);
+  }
+}
+
+@mixin btn-close {
+  width: 30px;
+  aspect-ratio: 1;
+  background-color: rgba(255, 0, 0, 0.9);
+  font-size: 20px;
+  @include borderRadius;
 }
